@@ -5,7 +5,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import AppLayout from '@/layouts/app-layout';
 import { Task, type BreadcrumbItem } from '@/types';
 import { Head, router, useForm, usePage } from '@inertiajs/react';
-import { CircleCheckBig, Trash } from 'lucide-react';
+import { CircleCheckBig, FrownIcon, SmileIcon, Trash } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 
@@ -78,6 +78,16 @@ export default function Dashboard() {
                                 </TableRow>
                             </TableHeader>
                             <TableBody>
+                                {tasks.length === 0 && (
+                                    <TableRow>
+                                        <TableCell colSpan={4} className="h-24 text-center">
+                                            <div className="flex flex-col items-center justify-center gap-2">
+                                                <SmileIcon />
+                                                <p className="text-muted-foreground">No pending tasks found</p>
+                                            </div>
+                                        </TableCell>
+                                    </TableRow>
+                                )}
                                 {tasks
                                     .filter((task) => !task.completed)
                                     .map((task) => (
@@ -123,6 +133,16 @@ export default function Dashboard() {
                                 </TableRow>
                             </TableHeader>
                             <TableBody>
+                                {tasks.filter((task) => task.completed).length === 0 && (
+                                    <TableRow>
+                                        <TableCell colSpan={4} className="h-24 text-center">
+                                            <div className="flex flex-col items-center justify-center gap-2">
+                                                <FrownIcon />
+                                                <p className="text-muted-foreground">No completed tasks found</p>
+                                            </div>
+                                        </TableCell>
+                                    </TableRow>
+                                )}
                                 {tasks
                                     .filter((task) => task.completed)
                                     .map((task) => (
